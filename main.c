@@ -3,13 +3,12 @@
 #include <time.h>
 #include "sort.h"
 
-/*
-#if 0
-enum { SIZE = 4194304 };
-#endif
-enum { SIZE = 4096 };
-*/
+#ifdef DBG_MODE
 enum {SIZE = 9} ;
+#else
+enum {SIZE = 4096} ;
+#endif
+
 int data[SIZE];
 
 void
@@ -18,8 +17,8 @@ generate(int *data, int size)
 	srand((unsigned) time(0));
 	for (int i = 0; i < size; i++)
 	{
-		data[i] = rand() % 10 + 1;
-		//data[i] = rand();
+		//data[i] = rand() % 10 + 1;
+		data[i] = rand();
 	}
 }
 
@@ -45,7 +44,12 @@ int main(int argc, char *argv[])
 	output(data, SIZE);
 	//sort(data, SIZE, sizeof(*data), intcmp);
 	sort(data, SIZE);
+	#ifdef PRINT_MODE
 	output(data, SIZE);
+	fprintf(stdout, "PRINT_MODE\n");
+	#else
+	fprintf(stdout, "PRINT_RES_OFF\n");
+	#endif
 
 	return 0;
 }

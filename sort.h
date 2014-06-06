@@ -7,3 +7,6 @@ typedef int (*cmp_t)(const void *, const void *);
 void sort(int *ptr, int nmemb);
 
 #endif /* INCLUDES_FUNNELSORT_SORT_H */
+
+//#define DBG_MODE
+#define PRINT_MODE
