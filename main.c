@@ -6,7 +6,7 @@
 #ifdef DBG_MODE
 enum {SIZE = 9} ;
 #else
-enum {SIZE = 4096} ;
+enum {SIZE = 100000} ;
 #endif
 
 int data[SIZE];
@@ -17,8 +17,11 @@ generate(int *data, int size)
 	srand((unsigned) time(0));
 	for (int i = 0; i < size; i++)
 	{
-		//data[i] = rand() % 10 + 1;
+		#ifdef DBG_MODE
+		data[i] = rand() % 10 + 1;
+		#else
 		data[i] = rand();
+		#endif
 	}
 }
 
@@ -41,14 +44,23 @@ int main(int argc, char *argv[])
 	(void) argv;
 	generate(data, SIZE);
 	
+	#ifdef PRINT_MODE
 	output(data, SIZE);
-	//sort(data, SIZE, sizeof(*data), intcmp);
-	sort(data, SIZE);
+	#endif
+	
+	sort(data, SIZE, sizeof(*data), intcmp);
+	
 	#ifdef PRINT_MODE
 	output(data, SIZE);
 	fprintf(stdout, "PRINT_MODE\n");
 	#else
 	fprintf(stdout, "PRINT_RES_OFF\n");
+	#endif
+	
+	#ifdef SHOW_DBG
+	fprintf(stdout, "DBG_SHOW_MODE\n");
+	#else
+	fprintf(stdout, "DBG_SHOW_OFF\n");
 	#endif
 
 	return 0;
